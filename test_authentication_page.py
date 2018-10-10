@@ -23,6 +23,7 @@ def test_page_contains_already_registered_form(auth_page):
 invalid_email_expected_message = 'Invalid email address.'
 @pytest.mark.parametrize('email,expected_message', [
     ('',invalid_email_expected_message),
+    ('@', invalid_email_expected_message),
     ('a', invalid_email_expected_message),
     ('a@', invalid_email_expected_message),
     ('a@a', invalid_email_expected_message),
