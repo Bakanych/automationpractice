@@ -28,12 +28,19 @@ invalid_email_expected_message = 'Invalid email address.'
     ('a@a', invalid_email_expected_message),
     ('a@a.', invalid_email_expected_message)
 ])
-def test_sign_up_should_validate_empty_email(sign_up_form, email, expected_message):
+def test_sign_up_validate_invalid_email(sign_up_form, email, expected_message):
     result_page = sign_up_form.try_create_account(email)
     assert isinstance(result_page, DangerAlert)
     assert result_page.message == invalid_email_expected_message
 
-def test(sign_up_form):
-    result_page = sign_up_form.try_create_account()
+
+existing_email_expected_message = 'An account using this email address has already been registered. ' \
+                                  'Please enter a valid password or request a new one.'
+def test_sign_up_validate_existing_email(sign_up_form):
+    #TODO create and use new account email as arrange step
+    existing_email = '1@1.1'
+    result_page = sign_up_form.try_create_account(existing_email)
     assert isinstance(result_page, DangerAlert)
+    assert result_page.message == existing_email_expected_message
+
 

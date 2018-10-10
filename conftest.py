@@ -17,6 +17,7 @@ def browser():
     return browser
 
 
+#TODO close browser if error occured
 @pytest.fixture(scope="session")
 def browser_fixture(browser):
     yield
