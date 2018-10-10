@@ -1,0 +1,16 @@
+{
+  "info": {
+    "first_name":"Eric",
+    "last_name": "Cartman",
+    "email":null,
+    "password": "11111"
+  },
+  "address":{
+    "address_1": "Test Co.",
+    "city": "South Park",
+    "country": "United States",
+    "state": "Colorado",
+    "zip": 11111,
+    "mobile_phone": 11111
+  }
+}
