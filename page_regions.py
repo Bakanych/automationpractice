@@ -15,12 +15,23 @@ class SignUpForm(BaseForm):
     _root_locator = (By.ID, 'create-account_form')
     _email_loc = (By.ID, 'email_create')
     _submit_loc = (By.ID, 'SubmitCreate')
+    _error_alert_loc = (By.CSS_SELECTOR, '.alert.alert-danger')
 
+    @property
+    def is_valid(self):
+        self.page.wait_for_page_to_load()
+        return not self.is_element_displayed(*self._error_alert_loc)
 
-    def try_create_account(self, email):
-        self.find_element(*self._email_loc).send_keys(email)
+    def try_create_account(self, email=''):
+        email_input = self.find_element(*self._email_loc)
+        email_input.clear()
+        email_input.send_keys(email)
         self.find_element(*self._submit_loc).click()
-        return CreateAccountForm(self.page)
+
+        if self.is_valid:
+            return CreateAccountForm(self.page)
+        else:
+            return DangerAlert(self)
 
 
 class SignInForm(BaseForm):
@@ -29,7 +40,6 @@ class SignInForm(BaseForm):
 
 class CreateAccountForm(Region):
     _root_locator = (By.ID, 'account-creation_form')
-
 
     _first_name_loc = (By.ID, 'customer_firstname')
     _last_name_loc = (By.ID, 'customer_lastname')
@@ -46,7 +56,6 @@ class CreateAccountForm(Region):
 
     @property
     def loaded(self):
-        self.wait
         return self.root.is_displayed()
 
     def register(self, account):
@@ -68,3 +77,15 @@ class CreateAccountForm(Region):
         self.find_element(*self._submit_loc).click()
 
         return self.page.wait_for_page_to_load()
+
+
+class DangerAlert(Region):
+    _root_locator = (By.CSS_SELECTOR, '.alert.alert-danger')
+
+    @property
+    def loaded(self):
+        return self.root.is_displayed()
+
+    @property
+    def message(self):
+        return self.root.text
