@@ -1,20 +1,21 @@
 import pytest
 import uuid
-from pages.account import MyAccountPage
 from regions.alert import DangerAlert, SuccessAlert
-from pages.auth import AuthPage, SignInForm, ForgotPasswordPage
-from scenarios.sign_up_tests import test_register_new_user_positive
+from pages.auth import AuthPage, SignInForm, ForgotPasswordPage, MyAccountPage
+from scenarios.sign_up_tests import get_account, register_new_user
 
+existing_account_email = '2@2.2'
+existing_account_password = 'qweqwe'
 
-@pytest.fixture(scope='module')
+@pytest.fixture()
 def auth_page(browser)->AuthPage:
     return AuthPage(browser).open()
 
-@pytest.fixture(scope='module')
+@pytest.fixture()
 def sign_in_form(browser)->SignInForm:
     return auth_page(browser).sign_in_form
 
-@pytest.fixture(scope='module')
+@pytest.fixture()
 def password_page(browser)->ForgotPasswordPage:
     return ForgotPasswordPage(browser).open()
 
@@ -32,9 +33,9 @@ empty_password_message = 'Password is required.'
     (('a@',''), invalid_email_message),
     (('a@a',''), invalid_email_message),
     (('a@a.',''), invalid_email_message),
-    (('2@2.2',''), empty_password_message),
-    (('2@2.2', '1'), invalid_password_message),
-    (('2@2.2', '111111'), incorrect_password_message)
+    ((existing_account_email,''), empty_password_message),
+    ((existing_account_email, '1'), invalid_password_message),
+    ((existing_account_email, '111111'), incorrect_password_message)
 ])
 def test_sign_in_negative(sign_in_form, cred, expected_message):
     alert = sign_in_form.try_sign_in(*cred)
@@ -43,24 +44,24 @@ def test_sign_in_negative(sign_in_form, cred, expected_message):
     assert expected_message in alert.message
 
 
-#TODO call logout teardown fixture
 def test_sign_in_positive(sign_in_form):
-    cred = ('2@2.2','qweqwe')
-    alert = sign_in_form.try_sign_in(*cred)
+    cred = (existing_account_email,existing_account_password)
+    account_page = sign_in_form.try_sign_in(*cred)
 
-    assert isinstance(alert, MyAccountPage)
+    assert isinstance(account_page, MyAccountPage)
+
+    account_page.sign_out()
 
 
-def test_sign_in_forgot_password_link(sign_in_form):
+def test_forgot_password_link(sign_in_form):
     forgot_password_form = sign_in_form.forgot_password()
 
     assert 'Forgot your password?'.upper() == forgot_password_form.form_title
 
 
 def test_recover_password_positive(password_page):
-    existing_email = '2@2.2'
-    expected_message = "A confirmation email has been sent to your address: {}".format(existing_email)
-    alert = password_page.form.try_retrieve_password(existing_email)
+    expected_message = "A confirmation email has been sent to your address: {}".format(existing_account_email)
+    alert = password_page.form.try_retrieve_password(existing_account_email)
 
     assert isinstance(alert, SuccessAlert)
     assert expected_message == alert.message
@@ -88,7 +89,7 @@ def test_recover_password_navigate_back_breadcrumb(password_page):
 
 def test_logged_user_cannot_login_using_direct_link(browser):
 
-    test_register_new_user_positive(browser)
+    register_new_user(browser, get_account())
     page = AuthPage(browser).open()
 
     assert 'My account'.upper() == page.title

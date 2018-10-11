@@ -2,7 +2,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 from pages.base import BasePage
-from pages.account import MyAccountPage
 from pages.with_header import PageWithHeader
 from pages.with_nav import PageWithNavigation
 from regions.base_form import BaseForm
@@ -27,6 +26,7 @@ class PageWithAuth(BasePage):
     def sign_out(self):
         assert self.is_authenticated, 'Cannot sign out: User is not signed in'
         self.find_element(*self._sign_out_loc).click()
+        self.wait_for_page_to_load()
         assert not self.is_authenticated
         return self
 
@@ -179,3 +179,7 @@ class CreateAccountForm(BaseForm):
         self.find_element(*self._submit_loc).click()
 
         return self.page.wait_for_page_to_load()
+
+
+class MyAccountPage(PageWithAuth, PageWithHeader):
+    pass

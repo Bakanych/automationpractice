@@ -21,7 +21,7 @@ def register_new_user(browser, account)->PageWithAuth:
 
     return page
 
-#TODO call logout teardown fixture
+
 def test_register_new_user_positive(browser):
 
     account = get_account()
@@ -29,3 +29,5 @@ def test_register_new_user_positive(browser):
 
     assert page.is_authenticated
     assert page.header_user_info == '{} {}'.format(account['info']['first_name'], account['info']['last_name'])
+
+    page.sign_out()
