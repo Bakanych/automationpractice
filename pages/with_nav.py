@@ -11,12 +11,20 @@ class PageWithNavigation(BasePage):
     _navigation_links_loc = (By.CSS_SELECTOR, '.breadcrumb a[title]')
 
     @property
+    def _nav_elements(self):
+        return self.find_elements(*self._navigation_links_loc)
+
+    @property
     def current(self):
         return self.find_element(*self._current_page_loc).text
 
     @property
     def nav_items(self):
-        return [el.get_attribute('title') for el in self.find_elements(*self._navigation_links_loc)]
+        return [el.get_attribute('title') for el in self._nav_elements]
+
+    def navigate(self, index):
+        self._nav_elements[index].click()
+
 
 
 

@@ -1,4 +1,3 @@
-from pypom import Region
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
@@ -40,11 +39,9 @@ class PageWithAuth(BasePage):
 
 
 class AuthPage(PageWithAuth, PageWithHeader, PageWithNavigation):
-
     URL_TEMPLATE = '/index.php?controller=authentication&back=my-account'
     _sign_up_form = None
     _sign_in_form = None
-
 
     @property #cached form element
     def sign_up_form(self):
@@ -60,7 +57,6 @@ class AuthPage(PageWithAuth, PageWithHeader, PageWithNavigation):
 
 
 class ForgotPasswordPage(PageWithNavigation):
-
     URL_TEMPLATE = '/index.php?controller=password'
     _back_to_login_loc = (By.CSS_SELECTOR,"a[title='Back to Login']")
 
@@ -71,13 +67,13 @@ class ForgotPasswordPage(PageWithNavigation):
     def back_to_login(self):
         self.find_element(*self._back_to_login_loc).click()
         self.wait_for_page_to_load()
-        return AuthPage(self)
+        return AuthPage(self.driver)
 
 
 
 class ForgotPasswordForm(BaseForm):
 
-    #TODO: this form has incorrect title layout. it should be inside the form. Upper element is used as root for workaround
+    # TODO: this form has incorrect title layout. it should be inside the form. Upper element is used as root for workaround
     _root_locator = (By.ID, 'center_column')
     _email_loc = (By.ID, 'email')
     _submit_loc = (By.CSS_SELECTOR, "button[type='submit']")
@@ -95,7 +91,6 @@ class ForgotPasswordForm(BaseForm):
 
 
 class SignInForm(BaseForm):
-
     _root_locator = (By.ID, 'login_form')
     _email_loc = (By.ID, 'email')
     _password_loc = (By.ID, 'passwd')
@@ -123,7 +118,6 @@ class SignInForm(BaseForm):
 
 
 class SignUpForm(BaseForm):
-
     _root_locator = (By.ID, 'create-account_form')
     _email_loc = (By.ID, 'email_create')
     _submit_loc = (By.ID, 'SubmitCreate')

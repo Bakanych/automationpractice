@@ -7,7 +7,7 @@ class BasePage(Page):
     def __init__(self, driver):
         super().__init__(driver)
 
-        #TODO read from test environment settings
+        #TODO read from scenarios environment settings
         self.base_url = 'http://automationpractice.com'
         self.timeout = 5
 
