@@ -3,10 +3,6 @@ from selenium.webdriver.chrome.options import Options
 import pytest
 
 
-@property
-def base_url():
-    return 'qwe'
-
 @pytest.fixture(scope="session")
 def browser():
     opts = Options()
