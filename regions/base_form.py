@@ -6,7 +6,7 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 class BaseForm(Region):
-    _header_loc = (By.CSS_SELECTOR,'h3.page-subheading')
+    _header_loc = (By.CSS_SELECTOR,'.page-subheading')
 
     def _field_input_loc(self, label):
         return (By.XPATH, ".//div[./label='{}']".format(label))

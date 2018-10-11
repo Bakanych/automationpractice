@@ -45,3 +45,7 @@ def test_sign_in_positive(sign_in_form):
     cred = ('2@2.2','qweqwe')
     alert = sign_in_form.try_sign_in(*cred)
     assert isinstance(alert, MyAccountPage)
+
+def test_forgot_password_link(sign_in_form):
+    forgot_password_form = sign_in_form.forgot_password()
+    assert 'Forgot your password?'.upper() == forgot_password_form.form_title

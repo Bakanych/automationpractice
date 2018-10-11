@@ -59,13 +59,27 @@ class AuthPage(PageWithAuth, PageWithHeader, PageWithNavigation):
         return self._sign_in_form
 
 
+class ForgotPasswordForm(BaseForm):
+
+    #TODO: this form has incorrect title layout. it should be inside the form. Upper element is used as root for workaround
+    _root_locator = (By.ID, 'center_column')
+    _email_loc = (By.ID, 'email')
+    _submit_loc = (By.CSS_SELECTOR, "button[type='submit']")
+
+
 class SignInForm(BaseForm):
 
     _root_locator = (By.ID, 'login_form')
     _email_loc = (By.ID, 'email')
     _password_loc = (By.ID, 'passwd')
     _submit_loc = (By.ID, 'SubmitLogin')
+    _forgot_password_loc = (By.CSS_SELECTOR, '.lost_password a')
 
+    def forgot_password(self):
+        self.find_element(*self._forgot_password_loc).click()
+        self.page.wait_for_page_to_load()
+        return ForgotPasswordForm(self.page)
+    
     def try_sign_in(self, email, password):
         email_input = self.find_element(*self._email_loc)
         email_input.clear()
