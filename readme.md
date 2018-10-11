@@ -31,6 +31,7 @@
 | 2    | Check "ALREADY REGISTERED?" form appearance | ![](img/2.PNG)  |            
 |      |                                             |                 |            
 
+
 3. Sign in with empty email
 
 | #    | Step                                        | Expected Result | Automation |
@@ -38,6 +39,7 @@
 | 1 | Authentication page is opened. Email address field is empty. |                 |                 |
 | 2 | Click Sign in button. | Error alert: *An email address required.* |       |
 |      |                                             |                 |                 |
+
 
 4. Sign in with invalid email
 
@@ -48,6 +50,7 @@
 | 3 | Click Sign in button | Error alert: *Invalid email address.* |                 |
 |  |  |  | |
 
+
 5. Sign in with valid existing email and empty password
 
 | #    | Step                                        | Expected Result | Automation |
@@ -56,6 +59,7 @@
 | 2 | Enter email address of the registered user. Click Sign in button. | Error alert: *Password is required.* |       |
 |      |                                             |                 |                 |
 
+
 6. Sign in with valid existing email and incorrect password
 
 | #    | Step                                        | Expected Result | Automation |
@@ -63,6 +67,7 @@
 | 1 | Authentication page is opened. |                 |                 |
 | 2 | Enter email address and incorrect password of the registered user. Click Sign in button. | Error alert: *Invalid password.* |       |
 |      |                                             |                 |                 |
+
 
 7. Sign in with valid existing email and valid password
 
@@ -73,6 +78,7 @@
 | 3 | Check page header navigation menu. | Contains: *Sign out>{First name} {Last name}*<br />Doesn't contain: *Sign in* |                 |
 | |  |  | |
 
+
 8. Password recover: form appearance
 
 | #    | Step                                        | Expected Result | Automation |
@@ -80,6 +86,7 @@
 | 1 | Authentication page is opened. |                 |                 |
 | 21 | Click [Forgot your password?](http://automationpractice.com/index.php?controller=password) link. | "FORGOT YOUR PASSWORD?" form appeared:<br />![](img/3.png) |       |
 |      |                                             |                 |                 |
+
 
 9. Password recover: navigation back via back button
 
@@ -89,6 +96,7 @@
 | 2 | Click *Back to Login* button below. | Authentication page is opened. |  |
 |      |                                             |                 |                 |
 
+
 10. Password recover: navigation back via breadcrumb
 
 
@@ -97,6 +105,7 @@
 | 1 | Forgot your password form is opened. |                 |                 |
 | 2 | Click *Authentication* menu in the page breadcrumb. | Authentication page is opened. |       |
 |      ||||
+
 
 11. Password recover with invalid email
 
@@ -108,6 +117,7 @@
 | 3 | Enter invalid email address. Click *Retrieve Password* button. | Error alert: *Invalid email address.* |                 |
 | |  |  | |
 
+
 12. Password recover with non-existing email
 
 | #    | Step                                        | Expected Result | Automation |
@@ -116,6 +126,7 @@
 | 2 | Enter valid email address of the non-existing user account. Click *Retrieve Password* button. | Error alert: *There is no account registered for this email address.* |       |
 |      |                                             |                 |                 |
 
+
 13. Password recover: with existing email
 
 | #    | Step                                        | Expected Result | Automation |
@@ -123,6 +134,7 @@
 | 1 | Forgot your password form is opened. |                 |                 |
 | 2 | Enter valid email address of the existing user account. Click *Retrieve Password* button. | Confirmation alert: *A confirmation email has been sent to your address: {entered email address}* |       |
 |      |                                             |                 |                 |
+
 
 14. Logged in user navigates to authentication page using URL
 
