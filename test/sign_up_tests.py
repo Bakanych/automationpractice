@@ -3,14 +3,15 @@ import uuid
 
 import pytest
 
-from pages.base_page import BasePage
+from pages.base import BasePage
 
 
+#TODO call logout teardown fixture
 @pytest.fixture(scope='module')
 def page(browser)->BasePage:
     return BasePage(browser).open()
 
-def test_sign_up_with_valid_data(page):
+def test_register_new_user_positive(page):
     with open('account.json','r') as f:
         account = json.load(f)
     id = uuid.uuid4()

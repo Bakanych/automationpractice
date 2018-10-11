@@ -1,9 +1,7 @@
 import pytest
-
-from pages.my_account_page import MyAccountPage
-from regions.sign_in_form import SignInForm
+from pages.account import MyAccountPage
 from regions.danger_alert import DangerAlert
-from pages.auth_page import AuthPage
+from pages.auth import AuthPage, SignInForm
 
 
 @pytest.fixture(scope='module')
@@ -42,8 +40,8 @@ def test_sign_in_negative(sign_in_form, cred, expected_message):
     assert isinstance(alert, DangerAlert)
     assert expected_message in alert.message
 
-
+#TODO call logout teardown fixture
 def test_sign_in_positive(sign_in_form):
-    cred = ('2@2.2','11111')
+    cred = ('2@2.2','qweqwe')
     alert = sign_in_form.try_sign_in(*cred)
     assert isinstance(alert, MyAccountPage)
