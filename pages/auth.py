@@ -7,7 +7,7 @@ from pages.account import MyAccountPage
 from pages.with_header import PageWithHeader
 from pages.with_nav import PageWithNavigation
 from regions.base_form import BaseForm
-from regions.danger_alert import DangerAlert
+from regions.alert import DangerAlert, SuccessAlert
 
 
 class PageWithAuth(BasePage):
@@ -59,12 +59,39 @@ class AuthPage(PageWithAuth, PageWithHeader, PageWithNavigation):
         return self._sign_in_form
 
 
+class ForgotPasswordPage(PageWithNavigation):
+
+    URL_TEMPLATE = '/index.php?controller=password'
+    _back_to_login_loc = (By.CSS_SELECTOR,"a[title='Back to Login']")
+
+    @property
+    def form(self):
+        return ForgotPasswordForm(self)
+
+    def back_to_login(self):
+        self.find_element(*self._back_to_login_loc).click()
+        self.wait_for_page_to_load()
+        return AuthPage(self)
+
+
+
 class ForgotPasswordForm(BaseForm):
 
     #TODO: this form has incorrect title layout. it should be inside the form. Upper element is used as root for workaround
     _root_locator = (By.ID, 'center_column')
     _email_loc = (By.ID, 'email')
     _submit_loc = (By.CSS_SELECTOR, "button[type='submit']")
+
+    def try_retrieve_password(self, email):
+        email_input = self.find_element(*self._email_loc)
+        email_input.clear()
+        email_input.send_keys(email)
+        self.find_element(*self._submit_loc).click()
+
+        if self.page.is_valid:
+            return SuccessAlert(self.page)
+        else:
+            return DangerAlert(self.page)
 
 
 class SignInForm(BaseForm):
@@ -119,7 +146,7 @@ class SignUpForm(BaseForm):
             return DangerAlert(self)
 
 
-class CreateAccountForm(Region):
+class CreateAccountForm(BaseForm):
     _root_locator = (By.ID, 'account-creation_form')
 
     _first_name_loc = (By.ID, 'customer_firstname')
