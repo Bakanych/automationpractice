@@ -1,4 +1,5 @@
 import pytest
+import uuid
 from pages.account import MyAccountPage
 from regions.alert import DangerAlert, SuccessAlert
 from pages.auth import AuthPage, SignInForm, ForgotPasswordPage
@@ -57,10 +58,24 @@ def test_sign_in_forgot_password_link(sign_in_form):
     assert 'Forgot your password?'.upper() == forgot_password_form.form_title
 
 
-def test_forgot_password_positive(password_page):
+def test_recover_password_positive(password_page):
     existing_email = '2@2.2'
     expected_message = "A confirmation email has been sent to your address: {}".format(existing_email)
     alert = password_page.form.try_retrieve_password(existing_email)
 
     assert isinstance(alert, SuccessAlert)
     assert expected_message == alert.message
+
+
+@pytest.mark.parametrize('email,expected_message', [
+    ('',invalid_email_message),
+    ('123', invalid_email_message),
+    ('{}@example.com'.format(uuid.uuid4()), 'There is no account registered for this email address.')
+])
+def test_recover_password_negative(password_page, email, expected_message):
+
+    alert = password_page.form.try_retrieve_password(email)
+    assert isinstance(alert, DangerAlert)
+    assert expected_message in alert.message
+
+

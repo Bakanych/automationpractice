@@ -3,7 +3,6 @@ import uuid
 from pages.auth import PageWithAuth
 
 
-
 #TODO call logout teardown fixture
 def test_register_new_user_positive(browser):
 
