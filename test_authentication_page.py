@@ -1,7 +1,8 @@
 import pytest
+from regions.sign_up_form import SignUpForm
+from regions.danger_alert import DangerAlert
+from pages.auth_page import AuthPage
 
-from page_regions import SignUpForm, DangerAlert
-from pages import AuthPage
 
 @pytest.fixture(scope='module')
 def auth_page(browser)->AuthPage:

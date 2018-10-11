@@ -2,7 +2,6 @@ from selenium.webdriver import Chrome
 from selenium.webdriver.chrome.options import Options
 import pytest
 
-from pages import BasePage
 
 @property
 def base_url():

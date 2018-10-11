@@ -3,7 +3,8 @@ import uuid
 
 import pytest
 
-from pages import BasePage
+from pages.base_page import BasePage
+
 
 @pytest.fixture(scope='module')
 def page(browser)->BasePage:

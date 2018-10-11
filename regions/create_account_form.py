@@ -1,41 +1,6 @@
-from pypom import Page, Region
+from pypom import Region
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.support.ui import Select
-
-class BaseForm(Region):
-    _header_loc = (By.CSS_SELECTOR,'h3.page-subheading')
-
-    @property
-    def title(self):
-        return self.find_element(*self._header_loc).text
-
-
-class SignUpForm(BaseForm):
-    _root_locator = (By.ID, 'create-account_form')
-    _email_loc = (By.ID, 'email_create')
-    _submit_loc = (By.ID, 'SubmitCreate')
-    _error_alert_loc = (By.CSS_SELECTOR, '.alert.alert-danger')
-
-    @property
-    def is_valid(self):
-        self.page.wait_for_page_to_load()
-        return not self.is_element_displayed(*self._error_alert_loc)
-
-    def try_create_account(self, email=''):
-        email_input = self.find_element(*self._email_loc)
-        email_input.clear()
-        email_input.send_keys(email)
-        self.find_element(*self._submit_loc).click()
-
-        if self.is_valid:
-            return CreateAccountForm(self.page)
-        else:
-            return DangerAlert(self)
-
-
-class SignInForm(BaseForm):
-    _root_locator = (By.ID, 'login_form')
+from selenium.webdriver.support.select import Select
 
 
 class CreateAccountForm(Region):
@@ -77,15 +42,3 @@ class CreateAccountForm(Region):
         self.find_element(*self._submit_loc).click()
 
         return self.page.wait_for_page_to_load()
-
-
-class DangerAlert(Region):
-    _root_locator = (By.CSS_SELECTOR, '.alert.alert-danger')
-
-    @property
-    def loaded(self):
-        return self.root.is_displayed()
-
-    @property
-    def message(self):
-        return self.root.text
