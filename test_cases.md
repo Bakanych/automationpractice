@@ -126,4 +126,4 @@
 | #    | Step                                        | Expected Result |
 | ---- | ------------------------------------------- | --------------- |
 | 1 | User is logged in. |                 |
-| 2 | In browser navigate to the link: http://automationpractice.com/index.php?controller=authentication | Used is logged in. [My account](link to the page requirement documentation) page is opened. |
+| 2 | In browser navigate to the link: http://automationpractice.com/index.php?controller=authentication | Used is logged in. [My account]() page is opened. |
