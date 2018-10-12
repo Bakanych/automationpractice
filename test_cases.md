@@ -17,8 +17,6 @@
 | 7    | Check js errors and warnings in dev tools.         | No js error or warnings.                                     |
 | 8    | Check "CREATE AN ACCOUNT" form.                    | Displayed.                                                   |
 | 9    | Check "ALREADY REGISTERED?" form.                  | Displayed.                                                   |
-|      |                                                    |                                                              |
-
 
 
 ### Sign in form
@@ -29,7 +27,6 @@
 | ---- | ------------------------------------------- | --------------- |
 | 1    | Authentication page is opened.              |                 |
 | 2    | Check "ALREADY REGISTERED?" form appearance | ![](img/2.PNG)  |
-|      |                                             |                 |
 
 
 3. Sign in with empty email
